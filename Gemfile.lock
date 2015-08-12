@@ -228,16 +228,20 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bitters
+  bourbon
   capybara
   database_cleaner
   factory_girl_rails
   jquery-rails
+  neat
   pg
   pry
   pry-rails
   puma
   rspec-rails
   shoulda-matchers
+  sprockets-es6
   sqlite3
   test-unit
   thredded!
