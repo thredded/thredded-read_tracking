@@ -214,6 +214,10 @@ GEM
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
     sqlite3 (1.3.10)
+    teaspoon (1.0.2)
+      railties (>= 3.2.5, < 5)
+    teaspoon-mocha (2.2.4)
+      teaspoon (>= 1.0.0)
     test-unit (3.0.8)
       power_assert
     thor (0.19.1)
@@ -243,6 +247,11 @@ DEPENDENCIES
   shoulda-matchers
   sprockets-es6
   sqlite3
+  teaspoon
+  teaspoon-mocha
   test-unit
   thredded!
   thredded_reads!
+
+BUNDLED WITH
+   1.10.6

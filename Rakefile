@@ -17,6 +17,16 @@ require 'rspec/core/rake_task'
 desc 'Run all specs in spec directory (excluding plugin specs)'
 RSpec::Core::RakeTask.new(spec: 'app:db:test:prepare')
 
+desc 'Run the javascript specs'
+task :teaspoon do
+  ENV['TEASPOON_ENV'] =
+    File.expand_path('../spec/teaspoon_env.rb', __FILE__)
+  ENV['TEASPOON_RAILS_ENV'] =
+    File.expand_path('../spec/dummy/config/environment.rb', __FILE__)
+
+  Rake::Task["app:teaspoon"].invoke
+end
+
 task default: :spec
 
 namespace :dev do

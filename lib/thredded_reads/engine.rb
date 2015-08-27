@@ -6,5 +6,7 @@ module ThreddedReads
       g.assets false
       g.helper false
     end
+
+    config.assets.precompile += %w( thredded_reads.js )
   end
 end
