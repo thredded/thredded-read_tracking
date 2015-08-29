@@ -1,4 +1,6 @@
+//= require      jquery
 //= require_tree ./thredded_reads/vendor
+//= require      ./thredded_reads/latest_post
 
 class ThreddedReads {
   constructor(options){
@@ -7,7 +9,7 @@ class ThreddedReads {
       postsSelector: "[data-post-id]",
     }
 
-    this.latestPost = '';
+    this.latestPost = new LatestPost();
     this.topicCompleted = false;
     this.options = jQuery.extend({}, default_options, options);
   }
@@ -17,8 +19,13 @@ class ThreddedReads {
 
     jQuery(postsSelector)
       .bind('inview', e => {
-        this.latestPost = e.currentTarget.dataset['postId'];
+        this.latestPost.post = e.currentTarget.dataset['postId'];
       }.bind(this)
     )
+
+    jQuery(window)
+      .on('scroll', e => {
+        console.log(`We need to send ${this.latestPost.post}`)
+      }.bind(this), 3000);
   }
 }
