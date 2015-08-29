@@ -1,3 +1,4 @@
+//= require jquery
 //= require support/expect
 //= require support/sinon
 //= require support/chai

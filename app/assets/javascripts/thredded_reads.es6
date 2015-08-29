@@ -1,4 +1,3 @@
-//= require      jquery
 //= require_tree ./thredded_reads/vendor
 //= require      ./thredded_reads/latest_post
 
@@ -9,9 +8,9 @@ class ThreddedReads {
       postsSelector: "[data-post-id]",
     }
 
-    this.latestPost = new LatestPost();
-    this.topicCompleted = false;
     this.options = jQuery.extend({}, default_options, options);
+    this.topicCompleted = false;
+    this.latestPost = new LatestPost(this.options['topicId']);
   }
 
   track(){
