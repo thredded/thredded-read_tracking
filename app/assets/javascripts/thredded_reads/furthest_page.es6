@@ -1,5 +1,6 @@
 class FurthestPage {
   constructor(topicId, finder){
+    this.changed = false;
     this.topicId = topicId;
     this._init_localstorage();
     var hstore = JSON.parse(localStorage["thredded.furthestPage"]);
@@ -9,6 +10,7 @@ class FurthestPage {
 
       this.pageNum = hstore[this.topicId] = parseInt(finder());
       localStorage["thredded.furthestPage"] = JSON.stringify(hstore);
+      this.changed = true;
 
     } else {
       this.pageNum = hstore[this.topicId];
@@ -17,6 +19,10 @@ class FurthestPage {
 
   get page() {
     return this.pageNum;
+  }
+
+  isChanged() {
+    return this.changed;
   }
 
   // private

@@ -4,7 +4,7 @@
 //= require      ./thredded_reads/done_reading
 
 class ThreddedReads {
-  constructor(options){
+  constructor(options) {
     let default_options = {
       topicId: '',
       postsSelector: "[data-post-id]",
@@ -14,7 +14,6 @@ class ThreddedReads {
     }
 
     this.options        = jQuery.extend({}, default_options, options);
-    this.topicCompleted = false;
     this.doneReading    = new DoneReading(this.options['topicId'])
     this.furthestPost   = new FurthestPost(this.options['topicId']);
     this.furthestPage   = new FurthestPage(
@@ -23,7 +22,7 @@ class ThreddedReads {
       );
   }
 
-  track(){
+  track() {
     let postsSelector    = this.options['postsSelector'];
     let lastPostSelector = this.options['lastPostSelector'];
     let isFinished       = this.options['isFinished'];
@@ -36,7 +35,7 @@ class ThreddedReads {
 
     jQuery(lastPostSelector)
       .bind('inview', e => {
-        if(isFinished()){
+        if(!this.doneReading.done && isFinished()) {
           this.doneReading.finish();
         }
       }.bind(this)
@@ -44,21 +43,33 @@ class ThreddedReads {
 
     jQuery(window)
       .on('scroll', e => {
-        console.log(
-          `
-          We are at post ${this.furthestPost.post}
-          on page ${this.furthestPage.page}
-          and are we finished? ${this.doneReading.done}
-          `
-        )
+        if(this.isChanged()) {
+          console.log(
+            `
+            We are at post ${this.furthestPost.post}
+            on page ${this.furthestPage.page}
+            and are we finished? ${this.doneReading.done}
+            `
+          )
+        }
       }.bind(this), 1500);
   }
 
-  pageFinder(){
-    return parseInt(jQuery('.page.current').text());
+  pageFinder() {
+    let pageNum = jQuery('.page.current').text() || '1'
+
+    return parseInt(pageNum);
   }
 
-  isFinished(){
+  isFinished() {
     return(jQuery('.pagination span.last').length == 0);
+  }
+
+  isChanged() {
+    return(
+      this.doneReading.isChanged() ||
+      this.furthestPost.isChanged() ||
+      this.furthestPage.isChanged()
+    )
   }
 }

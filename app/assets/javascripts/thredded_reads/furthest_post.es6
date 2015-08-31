@@ -1,5 +1,6 @@
 class FurthestPost {
   constructor(topicId) {
+    this.changed = false;
     this._init_localstorage();
     this.topicId = topicId.toString();
     this.postId = JSON.parse(
@@ -17,7 +18,12 @@ class FurthestPost {
     if(this.postId === undefined || parseInt(p) > this.postId) {
       this.postId = hstore[this.topicId] = parseInt(p);
       localStorage["thredded.furthestPost"] = JSON.stringify(hstore);
+      this.changed = true;
     }
+  }
+
+  isChanged() {
+    return this.changed;
   }
 
   reset() {
