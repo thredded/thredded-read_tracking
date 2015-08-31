@@ -1,8 +1,8 @@
-describe("LatestPost", function() {
-  var topicId = "3"
-  var latest  = new LatestPost(topicId);
+describe("FurthestPost", function() {
+  var topicId = "3";
+  var latest  = new FurthestPost(topicId);
 
-  beforeEach(function(){
+  afterEach(function(){
     latest.reset();
   });
 
@@ -16,17 +16,17 @@ describe("LatestPost", function() {
   it("persists in localStorage", function() {
     latest.post = 10;
 
-    expect(localStorage["thredded.reads"]).to.equal('{"3":10}');
+    expect(localStorage["thredded.furthestPost"]).to.equal('{"3":10}');
   });
 
   it("saves more than one topic's history", function() {
-    topicOne = new LatestPost("5");
-    topicTwo = new LatestPost("6");
+    topicOne = new FurthestPost("5");
+    topicTwo = new FurthestPost("6");
 
     topicOne.post = 23;
     topicTwo.post = 47;
 
-    expect(localStorage["thredded.reads"]).to.equal('{"5":23,"6":47}')
+    expect(localStorage["thredded.furthestPost"]).to.equal('{"5":23,"6":47}')
   });
 });
 
