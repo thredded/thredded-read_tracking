@@ -8,5 +8,9 @@ module ThreddedReads
     end
 
     config.assets.precompile += %w( thredded_reads.js )
+
+    initializer 'thredded.initialize_redis' do
+      $redis ||= ::Redis.new(url: 'redis://localhost:6379/2')
+    end
   end
 end
