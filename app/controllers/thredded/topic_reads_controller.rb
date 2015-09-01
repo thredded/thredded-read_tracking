@@ -1,9 +1,7 @@
 module Thredded
   class TopicReadsController < ::ApplicationController
-    def create
-    end
-
     def update
+      binding.pry
     end
 
     def index

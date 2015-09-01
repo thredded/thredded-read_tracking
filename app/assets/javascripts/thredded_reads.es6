@@ -6,11 +6,12 @@
 class ThreddedReads {
   constructor(options) {
     let default_options = {
+      url: '',
       topicId: '',
       postsSelector: "[data-post-id]",
       lastPostSelector: "[data-post-id]:last",
-      isFinished: this.isFinished,
-      pageFinder: this.pageFinder,
+      isFinished: this._isFinished,
+      pageFinder: this._pageFinder,
     }
 
     this.options        = jQuery.extend({}, default_options, options);
@@ -43,7 +44,7 @@ class ThreddedReads {
 
     jQuery(window)
       .on('scroll', e => {
-        if(this.isChanged()) {
+        if(this._isChanged()) {
           console.log(
             `
             We are at post ${this.furthestPost.post}
@@ -51,25 +52,46 @@ class ThreddedReads {
             and are we finished? ${this.doneReading.done}
             `
           )
+
+          jQuery.ajax({
+            type: "PUT",
+            url: this.options['url'],
+            data: this._readData(),
+            success: data => {},
+            error: data => {},
+          })
         }
       }.bind(this), 1500);
   }
 
-  pageFinder() {
+  // private
+
+  _pageFinder() {
     let pageNum = jQuery('.page.current').text() || '1'
 
     return parseInt(pageNum);
   }
 
-  isFinished() {
+  _isFinished() {
     return(jQuery('.pagination span.last').length == 0);
   }
 
-  isChanged() {
+  _isChanged() {
     return(
       this.doneReading.isChanged() ||
       this.furthestPost.isChanged() ||
       this.furthestPage.isChanged()
     )
+  }
+
+  _readData() {
+    return {
+      topic_read: {
+        topic_id: this.options["topicId"],
+        furthest_post: this.furthestPost.post,
+        furthest_page: this.furthestPage.page,
+        done_reading: this.doneReading.done,
+      }
+    }
   }
 }

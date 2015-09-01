@@ -4,7 +4,10 @@
   <%= javascript_include_tag 'thredded_reads' %>
   <script>
     thredded = new Thredded;
-    reads    = new ThreddedReads({ topicId: '<%= topic.id %>' });
+    reads    = new ThreddedReads({
+      topicId: '<%= topic.id %>',
+      url: '<%= topic_read_path %>',
+    });
 
     thredded.postForm.init();
     thredded.timestamps.init();
