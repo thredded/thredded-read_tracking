@@ -1,3 +1,4 @@
 Thredded::Engine.routes.draw do
-  resources :topic_reads, only: [:index, :create, :update]
+  get '/topic_reads/*topic_ids', to: 'topic_reads#index'
+  resources :topic_reads, only: [:update]
 end
